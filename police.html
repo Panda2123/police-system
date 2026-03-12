@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وزارة الداخليه - العاصمة</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+        /* --- كود منع التنسيق والحماية الشاملة (CSS) --- */
+        * {
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            outline: none !important;
+        }
+
+        body {
+            background: var(--dark-bg); color: white; font-family: 'Cairo', sans-serif;
+            margin: 0; overflow-x: hidden;
+            background-image: radial-gradient(circle at top right, #0b1f3a 0%, #020814 100%);
+            min-height: 100vh;
+        }
+
+        /* السماح بالكتابة داخل حقول الإدخال فقط */
+        input, textarea {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
+        /* حماية الصور من السحب */
+        img {
+            pointer-events: none !important;
+        }
+
+        :root {
+            --primary: #0b3d91;   /* أزرق كحلي */
+            --dark-bg: #020814;   /* خلفية داكنة زرقاء */
+            --glass: rgba(255, 255, 255, 0.05);
+            --gold: #d4af37;      /* ذهبي */
+            --discord: #5865F2;
+        }
+
+        .discord-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1001;
+            background: var(--discord); color: white; width: 50px; height: 50px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; text-decoration: none; transition: 0.3s;
+        }
+
+        #splash {
+            position: fixed; inset: 0; background: url('https://images.unsplash.com/photo-1587350859728-11769117a7a7?q=80&w=2070') center/cover;
+            z-index: 9999; display: flex; align-items: center; justify-content: center;
+        }
+        #splash::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.9); }
+        
+        .login-card {
+            position: relative; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; padding: 60px 40px;
+            max-width: 600px; width: 95%; text-align: center;
+        }
+        .login-card img { width: 220px; margin-bottom: 30px; }
+
+        header {
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            padding: 25px; background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .header-logo { width: 45px; }
+
+        nav {
+            display: flex; justify-content: center; gap: 10px; padding: 12px;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 100; flex-wrap: wrap;
+        }
+        nav button { 
+            background: none; border: none; color: #999; padding: 12px 25px; 
+            font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem; border-radius: 10px;
+        }
+        nav button.active { background: rgba(255,62,62,0.15); color: var(--primary); }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .rules-container { background: var(--glass); border-radius: 30px; padding: 50px 40px; text-align: center; }
+        .rules-logo-big { width: 250px; margin-bottom: 35px; }
+        .rule-item { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: right; opacity: 0; font-size: 1.1rem; line-height: 1.6; }
+
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .course-card {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; padding: 25px; text-align: center; transition: 0.3s; opacity: 0;
+        }
+        .course-card:hover { transform: translateY(-10px); border-color: var(--gold); background: rgba(255,255,255,0.08); }
+        .course-logo { width: 65px; margin-bottom: 15px; }
+        .btn-more { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px; transition: 0.3s; }
+
+        .duty-card {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px; padding: 35px; text-align: center;
+            width: 100%; max-width: 450px; margin: 0 auto; box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .main-input { width: 90%; padding: 15px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; text-align: center; margin-bottom: 20px; outline: none; }
+        .timer-text { font-size: 4rem; color: var(--gold); font-weight: 900; font-family: monospace; margin: 15px 0; }
+        .btn-red { background: var(--primary); color: white; border: none; padding: 14px 45px; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 1.1rem; width: 85%; }
+        .btn-stop { background: white; color: black; }
+        .btn-stop:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+        .admin-grid { display: flex; flex-direction: column; gap: 40px; align-items: center; }
+        .admin-row { display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .admin-card { flex: 1; min-width: 380px; max-width: 520px; background: rgba(255,255,255,0.02); border: 2px solid rgba(212, 175, 55, 0.25); border-radius: 35px; padding: 50px 20px; text-align: center; opacity: 0; }
+        .admin-logo { width: 180px; margin-bottom: 20px; }
+        .admin-title { color: var(--gold); font-size: 3.5rem; font-weight: 900; margin: 5px 0; }
+        .admin-name { color: #fff; font-size: 2rem; font-weight: 700; }
+
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: #111; border: 1px solid var(--gold); border-radius: 25px; padding: 35px; max-width: 500px; width: 100%; position: relative; text-align: center; }
+        .close-modal { position: absolute; top: 15px; left: 15px; color: white; cursor: pointer; font-size: 2rem; }
+
+        .reveal-up { animation: fadeInUp 0.8s forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ================== Animations ================== */
+
+    /* حركة اللوجو */
+    .rules-logo-big,
+    .course-logo,
+    .admin-logo {
+        animation: floatLogo 4s ease-in-out infinite;
+    }
+
+    @keyframes floatLogo {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* حركة الكروت */
+    .course-card,
+    .admin-card,
+    .duty-card {
+        transition: all 0.4s ease;
+    }
+
+    .course-card:hover,
+    .admin-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 0 25px rgba(212,175,55,0.5);
+    }
+
+    /* حركة الأزرار */
+
+    .btn-red,
+    .btn-more,
+    nav button {
+        transition: all 0.3s ease;
+    }
+
+    .btn-red:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(11,61,145,0.8);
+    }
+
+    .btn-more:hover {
+        background: var(--gold);
+        color: black;
+    }
+
+    /* حركة العداد */
+
+    .timer-text {
+        animation: pulseTimer 2s infinite;
+    }
+
+    @keyframes pulseTimer {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.07); }
+        100% { transform: scale(1); }
+    }
+
+    /* حركة زر الديسكورد */
+
+    .discord-btn:hover {
+        transform: rotate(10deg) scale(1.1);
+    }
+
+    /* حركة الNavbar */
+
+    nav button:hover {
+        transform: translateY(-3px);
+    }
+
+    /* دخول الصفحات */
+
+    .section.active {
+        animation: pageFade 0.6s ease;
+    }
+
+    @keyframes pageFade {
+        from {
+            opacity:0;
+            transform:translateY(20px);
+        }
+        to {
+            opacity:1;
+            transform:translateY(0);
+        }
+    }
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+<a href="https://discord.gg/fJ898UzfcR" target="_blank" class="discord-btn">
+    <i class="fab fa-discord"></i>
+</a>
+
+<div id="splash">
+    <div class="login-card animate__animated animate__backInDown">
+        <img src="img/logo.png" alt="logo">
+        <h1>وزارة الداخليه - مدينة العاصمة</h1>
+        <p>هنا سوف تعرف كل شيء على القطاع دورات و قوانين و القيادة و اتمنى لك تجربة جيدة , ولا تنسى الصلاه على النبي</p>
+        <button onclick="enterSystem()" class="btn-red">دخول الموقع الآن</button>
+    </div>
+</div>
+
+<header id="main-header" style="display: none;">
+    <img src="img/logo.png" class="header-logo">
+    <div style="font-weight:900; font-size:1.6rem">وزارة الداخليه - مدينة العاصمة</div>
+</header>
+
+<nav id="main-nav" style="display: none;">
+    <button onclick="tab('rules', this)" class="active">الأنظمة والقوانين</button>
+    <button onclick="tab('courses', this)">قسم الوحدات</button>
+    <button onclick="tab('duty', this)">تسجيل الخدمة</button>
+    <button onclick="tab('admin', this)">قيادة الوزارة</button>
+</nav>
+
+<div class="container" id="main-container" style="display: none;">
+
+    <div id="rules" class="section active">
+        <div class="rules-container">
+            <img src="D:\web police\police.png" class="rules-logo-big">
+            <h2 style="color: var(--primary); font-size: 2.2rem; margin-bottom:35px;">دستور وقوانين وزارة الداخليه</h2>
+            <div id="rules-list"></div>
+        </div>
+    </div>
+
+    <div id="courses" class="section">
+        <h2 style="text-align: center; color: var(--gold); font-size: 2.5rem; margin-bottom: 10px;">الاقسام</h2>
+        <div class="courses-grid" id="courses-list"></div>
+    </div>
+
+    <div id="duty" class="section">
+        <div class="duty-card">
+            <img src="D:\web police\police.png" style="width: 130px; margin-bottom: 15px;">
+            <h2 style="color: var(--gold)">تسجيل الحضور</h2>
+            <input type="text" id="my-id" class="main-input" placeholder="أدخل ID الديسكورد">
+            <div class="duty-btns">
+                <button id="start-btn" class="btn-red" onclick="startDuty()">بدء الخدمة</button>
+                <button id="stop-btn" class="btn-red btn-stop" style="display:none;" onclick="endDuty()" disabled>تسجيل خروج</button>
+            </div>
+            <div class="timer-text" id="timer">00:00:00</div>
+            <p id="wait-msg" style="color: var(--primary); display:none; font-size:0.9rem;">يجب إكمال 5 دقائق في الخدمة قبل تسجيل الخروج</p>
+        </div>
+    </div>
+
+    <div id="admin" class="section">
+        <div class="admin-grid">
+            <div class="admin-row">
+                <div class="admin-card">
+                    <img src="img/logo.png" class="admin-logo">
+                    <div class="admin-title">وزير الداخلية</div>
+                    <div class="admin-name">مصطفي ابو العربي</div>
+                </div>
+                <div class="admin-card">
+                    <img src="img/logo.png" class="admin-logo">
+                    <div class="admin-title">مساعد الوزير</div>
+                    <div class="admin-name">الكويتي</div>
+                </div>
+            </div>
+            <div class="admin-row">
+                <div class="admin-card">
+                    <img src="img/logo.png" class="admin-logo">
+                    <div class="admin-title" style="font-size: 2.8rem;">مأمور المركز</div>
+                    <div class="admin-name">********</div>
+                </div>
+                <div class="admin-card">
+                    <img src="img/logo.png" class="admin-logo">
+                    <div class="admin-title" style="font-size: 2.8rem;">نائب المأمور</div>
+                    <div class="admin-name">********</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="courseModal">
+    <div class="modal-content animate__animated animate__zoomIn">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img src="D:\web police\police.png" style="width: 80px; margin-bottom: 15px;">
+        <h2 id="modalTitle" style="color: var(--gold); margin-bottom: 20px;"></h2>
+        <div style="text-align: right;">
+            <p id="modalDesc" style="line-height: 1.8; font-size: 1.1rem; color: #eee;"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- نظام حماية JS متطور ومحكم ---
+    (function protect() {
+        // منع الزر الأيمن
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // منع الاختصارات (F12, Ctrl+U, Ctrl+S, Ctrl+Shift+I وغيرها)
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.keyCode === 123 || // F12
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+                (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+                (e.ctrlKey && e.keyCode === 83) || // Ctrl+S
+                (e.ctrlKey && e.keyCode === 67) || // Ctrl+C (Copy)
+                (e.ctrlKey && e.keyCode === 65) || // Ctrl+A (Select All)
+                (e.metaKey && e.keyCode === 83)    // Mac Command+S
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // منع سحب الصور تماماً
+        document.addEventListener('dragstart', e => e.preventDefault());
+    })();
+
+    const WH = "https://discord.com/api/webhooks/1480696922619514944/HhEbw5VU7RsMHQOIQsgyAnarXPfmQ2IBcLOQZ10eqn1F2Z8C1ZOOXD6XqFwyAVgZQW2s";
+    let timerInterval;
+    const LOCK_TIME = 300; 
+
+    const rulesData = [
+       "1 - وزارة الداخلية هيئة نظامية هدفها حفظ الأمن والنظام وخدمة المواطنين.",
+"2 - يلتزم الضباط باحترام المواطنين والتعامل بأسلوب لائق.",
+"3 - يجب التحلي بالصبر والثبات الانفعالي أثناء العمل.",
+"4 - يمنع استغلال السلطة أو التعدي على المواطنين لأي سبب.",
+"5 - يمنع استخدام الألفاظ البذيئة داخل المدينة أو عبر الراديو.",
+"6 - يجب الالتزام بالمظهر الرسمي وتنفيذ أوامر القادة.",
+"7 - يمنع حمل السلاح أو توجيهه للمواطنين إلا عند وجود خطر.",
+"8 - يبدأ التعامل مع المجرم بطلب الاستسلام ثم استخدام التيزر ثم التصعيد عند الضرورة.",
+"9 - يسمح باستخدام السلاح الناري فقط عند تهديد الحياة أو الدفاع عن النفس.",
+"10 - يمنع استخدام السلاح داخل مركز الشرطة.",
+"11 - يحق تفتيش المواطنين فقط في حالات الاشتباه أو أثناء التحقيق أو في محيط الجريمة.",
+"12 - ممنوع تفتيش أي شخص بدون سبب قانوني واضح.",
+"13 - يجب تسجيل بيانات المشتبه به قبل التفتيش.",
+"14 - يجب على الضباط تنفيذ أوامر مركز العمليات دون جدال.",
+"15 - مركز العمليات مسؤول عن توزيع الدوريات والكمائن داخل المدينة.",
+"16 - يمنع الجلوس في القسم دون عمل ويجب التواجد في الدوريات.",
+"17 - يجب تأمين موقع الجريمة وإبعاد المواطنين قبل بدء أي عملية.",
+"18 - يمنع التدخل في عمل المفاوض أثناء التفاوض.",
+"19 - يمنع الكلام في الراديو أثناء الاقتحامات إلا للضرورة.",
+"20 - يجب انتظار المسعفين بعد انتهاء العمليات للتأكد من سلامة المصابين.",
+"21 - يمنع إطلاق النار على السيارات أثناء المطاردات إلا في حالة الخطر.",
+"22 - يسمح باستخدام مناورة PIT لإيقاف السيارة بشروط محددة.",
+"23 - تتكون المطاردة من سيارة رئيسية وسيارة ثانية وسيارات دعم.",
+"24 - يمنع تفتيش السيارات بدون دليل جنائي.",
+"25 - يمنع إتلاف سيارات المجرمين أثناء المطاردة.",
+"26 - يمنع ترك سيارات الشرطة في الشوارع ويجب إعادتها إلى الجراج.",
+"27 - يمنع المزاح باستخدام التيزر بين الضباط.",
+"28 - يمنع سرقة المصادرات أو الاحتفاظ بها خارج القسم.",
+"29 - يمنع دخول المواطنين داخل مركز الشرطة ويجب انتظارهم في الاستقبال.",
+"30 - يجب احترام جميع الرتب داخل الوزارة."
+    ];
+
+    const coursesData = [
+        { name: "الشوون الداخليه ", desc: "هى جهة رقابية على سلوك الضباط بشكل عام للتأكد من تطبيق اللائحة بالكامل وعد مخالفتها باي شكل من الأشكال." },
+        { name: "الامن العام ", desc: "هي قوات عسكرية وأحد أجهزة شرطة المدينة، تخضع للإشراف من مسؤول الأمن العام" },
+        { name: " المباحث العامه ", desc: "هو المكتب المسئول عن التحقيقات و الاستخبارات فى الوزاره بكل انواعها و تحتوى على قاعده بيانات و معلومات سريه لجميع مواطنين المدينه بالاضافة الى تلقى الشكاوى ، الاتهامات و الادعاءات فوحدة المباحث هى قاعدة معلومات تشمل سجلات و بيانات فى غاية الاهمية ." },
+        { name: " الامن المركزي ", desc: "  هى جهة عسكرية الامن المركزي تابعة لوزارة الداخلية ومكونة من فريق مدرب على احدث التقنيات و الأساليب القتالية ." },
+        { name: " المرور العامه", desc: "هي وحده مختصه عن تنظيم الطرق والتنظيم المروري في الميدان." }
+    ];
+
+    window.onload = function() {
+        const savedID = localStorage.getItem('saved_user_id');
+        if(savedID) document.getElementById('my-id').value = savedID;
+        if(localStorage.getItem('is_on_duty') === 'true') {
+            resumeDuty();
+        }
+    };
+
+    function enterSystem() {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('main-header').style.display = 'flex';
+        document.getElementById('main-nav').style.display = 'flex';
+        document.getElementById('main-container').style.display = 'block';
+        renderRules();
+        renderCourses();
+        if(localStorage.getItem('is_on_duty') === 'true') {
+            tab('duty', document.querySelectorAll('nav button')[2]);
+        } else {
+            tab('rules', document.querySelector('nav button'));
+        }
+    }
+
+    function tab(id, btn) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+        if(id === 'rules') animateItems('.rule-item');
+        if(id === 'courses') animateItems('.course-card');
+        if(id === 'admin') animateItems('.admin-card');
+    }
+
+    function renderRules() {
+        document.getElementById('rules-list').innerHTML = rulesData.map(r => `<div class="rule-item">${r}</div>`).join('');
+    }
+    function renderCourses() {
+
+    document.getElementById('courses-list').innerHTML = coursesData.map(c => {
+
+    let img = "police.png";
+
+    if(c.name.includes("المرور")) img = "img/اداره مرور.png";
+
+    if(c.name.includes("الامن المركزي")) img = "img/الامن المركزي.png";
+
+    if(c.name.includes("المباحث")) img = "img/fbi.png";
+
+    return `
+    <div class="course-card">
+
+    <img src="${img}" class="course-logo">
+
+    <h3>${c.name}</h3>
+
+    <button class="btn-more" onclick="openModal('${c.name}')">
+    المزيد من المعلومات
+    </button>
+
+    </div>
+    `;
+
+    }).join('');
+
+    }
+    function openModal(name) {
+        const c = coursesData.find(x => x.name === name);
+        document.getElementById('modalTitle').innerText = c.name;
+        document.getElementById('modalDesc').innerText = c.desc;
+        document.getElementById('courseModal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('courseModal').style.display = 'none'; }
+
+    function animateItems(sel) {
+        const items = document.querySelectorAll(sel);
+        items.forEach((item, i) => {
+            item.classList.remove('reveal-up');
+            void item.offsetWidth;
+            setTimeout(() => item.classList.add('reveal-up'), i * 60);
+        });
+    }
+
+    async function postToDiscord(msg, color) {
+        const id = document.getElementById('my-id').value;
+        const embed = {
+            title: "**نظاوزارة الداخليه**",
+            description: `**الضابط:** <@${id}>\n**ID:** **${id}**\n\n${msg}`,
+            color: color,
+            timestamp: new Date()
+        };
+        try {
+            await fetch(WH, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ embeds: [embed] }) });
+        } catch(e) {}
+    }
+
+    function startDuty() {
+        const id = document.getElementById('my-id').value;
+        if(!id) return alert("سجل ID أولاً");
+        localStorage.setItem('saved_user_id', id);
+        localStorage.setItem('start_time', Date.now());
+        localStorage.setItem('is_on_duty', 'true');
+        postToDiscord("✅ **بدأ الخدمة الآن**", 3066993);
+        resumeDuty();
+    }
+
+    function resumeDuty() {
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('stop-btn').style.display = 'inline-block';
+        document.getElementById('my-id').disabled = true;
+        updateTimer();
+        if(timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        const startTime = localStorage.getItem('start_time');
+        if (!startTime) return;
+        const start = parseInt(startTime);
+        const elapsed = Math.floor((Date.now() - start) / 1000);
+        if (elapsed < LOCK_TIME) {
+            const rem = LOCK_TIME - elapsed;
+            const m = Math.floor(rem / 60);
+            const s = rem % 60;
+            document.getElementById('timer').innerText = `${m}:${s.toString().padStart(2,'0')}`;
+            document.getElementById('stop-btn').disabled = true;
+            document.getElementById('wait-msg').style.display = 'block';
+        } else {
+            const h = Math.floor(elapsed / 3600);
+            const m = Math.floor((elapsed % 3600) / 60);
+            const s = elapsed % 60;
+            document.getElementById('timer').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            document.getElementById('stop-btn').disabled = false;
+            document.getElementById('wait-msg').style.display = 'none';
+        }
+    }
+
+    function endDuty() {
+        const finalTimeStr = document.getElementById('timer').innerText;
+        postToDiscord(`❌ **تسجيل خروج**\n**مدة العمل :** **${finalTimeStr}**`, 15158332);
+        clearInterval(timerInterval);
+        localStorage.setItem('is_on_duty', 'false');
+        localStorage.removeItem('start_time');
+        document.getElementById('start-btn').style.display = 'inline-block';
+        document.getElementById('stop-btn').style.display = 'none';
+        document.getElementById('my-id').disabled = false;
+        document.getElementById('timer').innerText = "00:00:00";
+        alert("تم تسجيل الخروج بنجاح.");
+    }
+</script>
+</body>
+</html>
