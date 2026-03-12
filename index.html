@@ -10,7 +10,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 
-        /* --- كود منع التنسيق والحماية الشاملة (CSS) --- */
         * {
             -webkit-user-select: none !important;
             -moz-user-select: none !important;
@@ -27,7 +26,6 @@
             min-height: 100vh;
         }
 
-        /* السماح بالكتابة داخل حقول الإدخال فقط */
         input, textarea {
             -webkit-user-select: text !important;
             -moz-user-select: text !important;
@@ -35,16 +33,15 @@
             user-select: text !important;
         }
 
-        /* حماية الصور من السحب */
         img {
             pointer-events: none !important;
         }
 
         :root {
-            --primary: #0b3d91;   /* أزرق كحلي */
-            --dark-bg: #020814;   /* خلفية داكنة زرقاء */
+            --primary: #0b3d91;  
+            --dark-bg: #020814;  
             --glass: rgba(255, 255, 255, 0.05);
-            --gold: #d4af37;      /* ذهبي */
+            --gold: #d4af37;      
             --discord: #5865F2;
         }
 
@@ -129,7 +126,6 @@
 
         /* ================== Animations ================== */
 
-    /* حركة اللوجو */
     .rules-logo-big,
     .course-logo,
     .admin-logo {
@@ -142,7 +138,6 @@
         100% { transform: translateY(0px); }
     }
 
-    /* حركة الكروت */
     .course-card,
     .admin-card,
     .duty-card {
@@ -155,7 +150,6 @@
         box-shadow: 0 0 25px rgba(212,175,55,0.5);
     }
 
-    /* حركة الأزرار */
 
     .btn-red,
     .btn-more,
@@ -173,7 +167,6 @@
         color: black;
     }
 
-    /* حركة العداد */
 
     .timer-text {
         animation: pulseTimer 2s infinite;
@@ -185,19 +178,16 @@
         100% { transform: scale(1); }
     }
 
-    /* حركة زر الديسكورد */
 
     .discord-btn:hover {
         transform: rotate(10deg) scale(1.1);
     }
 
-    /* حركة الNavbar */
 
     nav button:hover {
         transform: translateY(-3px);
     }
 
-    /* دخول الصفحات */
 
     .section.active {
         animation: pageFade 0.6s ease;
@@ -247,7 +237,7 @@
 
     <div id="rules" class="section active">
         <div class="rules-container">
-            <img src="D:\web police\police.png" class="rules-logo-big">
+            <img src="img/police.png" class="rules-logo-big">
             <h2 style="color: var(--primary); font-size: 2.2rem; margin-bottom:35px;">دستور وقوانين وزارة الداخليه</h2>
             <div id="rules-list"></div>
         </div>
@@ -260,7 +250,7 @@
 
     <div id="duty" class="section">
         <div class="duty-card">
-            <img src="D:\web police\police.png" style="width: 130px; margin-bottom: 15px;">
+            <img src="img/police.png" style="width: 130px; margin-bottom: 15px;">
             <h2 style="color: var(--gold)">تسجيل الحضور</h2>
             <input type="text" id="my-id" class="main-input" placeholder="أدخل ID الديسكورد">
             <div class="duty-btns">
@@ -314,29 +304,25 @@
 </div>
 
 <script>
-    // --- نظام حماية JS متطور ومحكم ---
     (function protect() {
-        // منع الزر الأيمن
         document.addEventListener('contextmenu', e => e.preventDefault());
 
-        // منع الاختصارات (F12, Ctrl+U, Ctrl+S, Ctrl+Shift+I وغيرها)
         document.addEventListener('keydown', function(e) {
             if (
-                e.keyCode === 123 || // F12
-                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
-                (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
-                (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
-                (e.ctrlKey && e.keyCode === 83) || // Ctrl+S
-                (e.ctrlKey && e.keyCode === 67) || // Ctrl+C (Copy)
-                (e.ctrlKey && e.keyCode === 65) || // Ctrl+A (Select All)
-                (e.metaKey && e.keyCode === 83)    // Mac Command+S
+                e.keyCode === 123 ||
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || 
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) || 
+                (e.ctrlKey && e.keyCode === 85) || 
+                (e.ctrlKey && e.keyCode === 83) || 
+                (e.ctrlKey && e.keyCode === 67) || 
+                (e.ctrlKey && e.keyCode === 65) || 
+                (e.metaKey && e.keyCode === 83)   
             ) {
                 e.preventDefault();
                 return false;
             }
         });
 
-        // منع سحب الصور تماماً
         document.addEventListener('dragstart', e => e.preventDefault());
     })();
 
@@ -536,3 +522,4 @@
 </script>
 </body>
 </html>
+
